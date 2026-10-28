@@ -1,0 +1,116 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan History - ScamShield</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">🛡️ ScamShield</div>
+
+        <nav>
+            <a href="/dashboard">📊 Dashboard</a>
+            <a href="/dashboard#scanner">🔍 Message Scanner</a>
+            <a href="/history" class="active">📋 Scan History</a>
+            <a href="#">📈 Analytics</a>
+            <a href="#">⚙️ Settings</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p>Smart Scam Detection</p>
+            <small>Stay Safe • Stay Alert</small>
+        </div>
+    </aside>
+
+    <main class="dashboard">
+
+        <header class="dashboard-header">
+            <div>
+                <h1>Scan History</h1>
+                <p>View your previously analyzed messages.</p>
+            </div>
+
+            <div class="status">🟢 System Active</div>
+        </header>
+
+        <section class="scanner-card">
+
+            <h2>📋 Previous Scans</h2>
+
+            <div id="historyList">
+                <p>No scans yet.</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        function loadHistory() {
+
+            const history =
+                JSON.parse(localStorage.getItem("scanHistory")) || [];
+
+            const list =
+                document.getElementById("historyList");
+
+            if (history.length === 0) {
+                list.innerHTML = "<p>No scans yet.</p>";
+                return;
+            }
+
+            list.innerHTML = "";
+
+            history.reverse().forEach(function(scan) {
+
+                const item = document.createElement("div");
+
+                item.style.background = "#f8fafc";
+                item.style.padding = "18px";
+                item.style.borderRadius = "10px";
+                item.style.marginTop = "15px";
+
+               item.innerHTML = `
+    <div style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">
+        🛡️ Scan Result
+    </div>
+
+    <p><strong>Message:</strong> ${scan.message}</p>
+
+    <p><strong>Scam Score:</strong> ${scan.score}%</p>
+
+    <p><strong>Risk Level:</strong> ${scan.risk}</p>
+
+    <div style="
+        margin-top: 12px;
+        padding: 10px;
+        background: white;
+        border-radius: 8px;
+        font-weight: 600;
+    ">
+        ${
+            scan.score >= 60
+                ? "⚠️ High risk — Be extremely careful."
+                : scan.score >= 30
+                ? "🟡 Medium risk — Verify before acting."
+                : "🟢 Low risk — No major scam indicators detected."
+        }
+    </div>
+`;
+                list.appendChild(item);
+            });
+        }
+
+        loadHistory();
+    </script>
+
+</body>
+</html>
+```

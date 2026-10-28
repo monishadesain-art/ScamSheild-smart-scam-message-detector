@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ScamShield Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            🛡️ ScamShield
+        </div>
+
+        <nav>
+
+            <a href="/dashboard" class="active">
+                📊 Dashboard
+            </a>
+
+            <a href="/dashboard#scanner">
+                🔍 Message Scanner
+            </a>
+
+            <a href="/history">
+                📋 Scan History
+            </a>
+
+            <a href="/analytics">
+                📈 Analytics
+             </a>
+
+            <a href="/settings">
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p>Smart Scam Detection</p>
+            <small>Stay Safe • Stay Alert</small>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="dashboard">
+
+        <header class="dashboard-header">
+
+            <div>
+                <h1>Dashboard</h1>
+                <p>Welcome to your ScamShield security center.</p>
+            </div>
+
+            <div class="status">
+                🟢 System Active
+            </div>
+
+        </header>
+
+
+        <!-- STAT CARDS -->
+
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🔍
+                </div>
+
+                <div>
+                    <h3 id="totalScans">0</h3>
+                    <p>Total Scans</p>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🚨
+                </div>
+
+                <div>
+                    <h3 id="scamsDetected">0</h3>
+                    <p>Scams Detected</p>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🛡️
+                </div>
+
+                <div>
+                    <h3 id="safeMessages">0</h3>
+                    <p>Safe Messages</p>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ⚠️
+                </div>
+
+                <div>
+                    <h3 id="highRisk">0</h3>
+                    <p>High Risk</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SCANNER -->
+
+        <section class="scanner-card" id="scanner">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>🔍 Scam Message Scanner</h2>
+
+                    <p>
+                        Paste a suspicious message below to analyze it.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <textarea
+                id="message"
+                placeholder="Paste suspicious SMS, WhatsApp message, email or social media message here..."
+            ></textarea>
+
+
+            <button onclick="detectScam()">
+                🛡️ Analyze Message
+            </button>
+
+        </section>
+
+
+        <!-- RESULT -->
+
+        <section id="result" class="result-card hidden">
+
+            <h2>Detection Result</h2>
+
+
+            <div class="result-grid">
+
+                <div class="score-section">
+
+                    <div id="score">
+                        0
+                    </div>
+
+                    <p>Scam Score</p>
+
+                    <div id="risk" class="risk low">
+                        LOW RISK
+                    </div>
+
+                    <div class="risk-meter">
+                        <div class="risk-bar">
+                          <div id="riskFill" class="risk-fill"></div>
+                     </div>
+                </div>
+
+                </div>
+
+
+                <div class="warning-section">
+
+                    <h3>⚠️ Warning Signs</h3>
+
+                    <ul id="warnings"></ul>
+
+                </div>
+
+            </div>
+
+
+            <div class="recommendation">
+
+                <h3>🛡️ Safety Recommendation</h3>
+
+                <p id="recommendation"></p>
+
+            </div>
+
+        </section>
+
+
+        <!-- INFORMATION -->
+
+        <section class="info-section">
+
+            <div class="info-card">
+
+                <h3>🔐 Protect Your Information</h3>
+
+                <p>
+                    Never share OTPs, passwords, PINs, CVV numbers
+                    or banking credentials with unknown people.
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <h3>🔗 Be Careful With Links</h3>
+
+                <p>
+                    Avoid clicking suspicious links received through
+                    unknown messages.
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <h3>🚨 Verify Before Acting</h3>
+
+                <p>
+                    Verify urgent requests with the official organization
+                    before making payments or sharing information.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <footer>
+
+            <p>
+                ScamShield © 2026 | Smart Scam Message Detector
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

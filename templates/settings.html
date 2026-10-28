@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings - ScamShield</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .settings-card {
+            background: white;
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+        }
+
+        .settings-card h2 {
+            margin-bottom: 10px;
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .setting-info span {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .toggle {
+            width: 48px;
+            height: 26px;
+            cursor: pointer;
+            accent-color: #2563eb;
+        }
+
+        .danger-button {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .danger-button:hover {
+            background: #dc2626;
+        }
+
+        .about-box {
+            color: #475569;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="brand">🛡️ ScamShield</div>
+
+        <nav>
+            <a href="/dashboard">📊 Dashboard</a>
+            <a href="/dashboard#scanner">🔍 Message Scanner</a>
+            <a href="/history">📋 Scan History</a>
+            <a href="/analytics">📈 Analytics</a>
+            <a href="/settings" class="active">⚙️ Settings</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p>Smart Scam Detection</p>
+            <small>Stay Safe • Stay Alert</small>
+        </div>
+
+    </aside>
+
+
+    <main class="dashboard">
+
+        <header class="dashboard-header">
+
+            <div>
+                <h1>⚙️ Settings</h1>
+                <p>Manage your ScamShield preferences.</p>
+            </div>
+
+            <div class="status">
+                🟢 System Active
+            </div>
+
+        </header>
+
+
+        <!-- Notifications -->
+
+        <section class="settings-card">
+
+            <h2>🔔 Notifications</h2>
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+                    <strong>Enable notifications</strong>
+                    <span>
+                        Enable notifications for high-risk scam messages.
+                    </span>
+                </div>
+
+                <input
+                    type="checkbox"
+                    class="toggle"
+                    id="notifications"
+                    checked
+                    onchange="saveSettings()">
+
+            </div>
+
+        </section>
+
+
+        <!-- Detection Settings -->
+
+        <section class="settings-card">
+
+            <h2>🛡️ Detection Settings</h2>
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+                    <strong>Enable scam detection</strong>
+                    <span>
+                        ScamShield automatically checks messages for
+                        suspicious patterns.
+                    </span>
+                </div>
+
+                <input
+                    type="checkbox"
+                    class="toggle"
+                    id="detection"
+                    checked
+                    onchange="saveSettings()">
+
+            </div>
+
+        </section>
+
+
+        <!-- Scan History -->
+
+        <section class="settings-card">
+
+            <h2>🗑️ Scan History</h2>
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+                    <strong>Clear Scan History</strong>
+                    <span>
+                        Clear all previously stored scan results.
+                    </span>
+                </div>
+
+                <button
+                    class="danger-button"
+                    onclick="clearHistory()">
+                    Clear Scan History
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- About -->
+
+        <section class="settings-card">
+
+            <h2>ℹ️ About ScamShield</h2>
+
+            <div class="about-box">
+
+                ScamShield is a smart scam message detection system
+                designed to identify suspicious messages and help users
+                stay safe from online scams.
+
+            </div>
+
+        </section>
+
+
+        <footer style="text-align:center; padding:25px;">
+            ScamShield © 2026 | Smart Scam Message Detector
+        </footer>
+
+    </main>
+
+
+    <script>
+
+        function saveSettings() {
+
+            const notifications =
+                document.getElementById("notifications").checked;
+
+            const detection =
+                document.getElementById("detection").checked;
+
+            localStorage.setItem(
+                "notificationsEnabled",
+                notifications
+            );
+
+            localStorage.setItem(
+                "detectionEnabled",
+                detection
+            );
+        }
+
+
+        function loadSettings() {
+
+            const notifications =
+                localStorage.getItem("notificationsEnabled");
+
+            const detection =
+                localStorage.getItem("detectionEnabled");
+
+            if (notifications !== null) {
+                document.getElementById("notifications").checked =
+                    notifications === "true";
+            }
+
+            if (detection !== null) {
+                document.getElementById("detection").checked =
+                    detection === "true";
+            }
+        }
+
+
+        function clearHistory() {
+
+            const confirmClear =
+                confirm(
+                    "Are you sure you want to clear all scan history?"
+                );
+
+            if (confirmClear) {
+
+                localStorage.removeItem("scanHistory");
+
+                alert("Scan history cleared successfully.");
+
+            }
+        }
+
+
+        loadSettings();
+
+    </script>
+
+</body>
+
+</html>

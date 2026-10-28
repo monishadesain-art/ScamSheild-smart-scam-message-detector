@@ -1,0 +1,284 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analytics - ScamShield</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            🛡️ ScamShield
+        </div>
+
+        <nav>
+
+            <a href="/dashboard">
+                📊 Dashboard
+            </a>
+
+            <a href="/dashboard#scanner">
+                🔍 Message Scanner
+            </a>
+
+            <a href="/history">
+                📋 Scan History
+            </a>
+
+            <a href="/analytics" class="active">
+                📈 Analytics
+            </a>
+
+            <a href="#">
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p>Smart Scam Detection</p>
+            <small>Stay Safe • Stay Alert</small>
+        </div>
+
+    </aside>
+
+
+    <main class="dashboard">
+
+        <header class="dashboard-header">
+
+            <div>
+                <h1>Analytics</h1>
+                <p>Overview of your ScamShield scan activity.</p>
+            </div>
+
+            <div class="status">
+                🟢 System Active
+            </div>
+
+        </header>
+
+
+        <section class="stats">
+
+            <div class="stat-card">
+                <div class="stat-icon">🔍</div>
+                <div>
+                    <h3 id="totalScans">0</h3>
+                    <p>Total Scans</p>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon">🚨</div>
+                <div>
+                    <h3 id="scamsDetected">0</h3>
+                    <p>Scams Detected</p>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon">🛡️</div>
+                <div>
+                    <h3 id="safeMessages">0</h3>
+                    <p>Safe Messages</p>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon">⚠️</div>
+                <div>
+                    <h3 id="highRisk">0</h3>
+                    <p>High Risk</p>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="scanner-card">
+
+            <h2>📊 Risk Analysis</h2>
+
+            <div style="margin-top: 25px;">
+
+                <p>
+                    <strong>High Risk:</strong>
+                    <span id="highRiskText">0</span>
+                </p>
+
+                <p style="margin-top: 15px;">
+                    <strong>Medium Risk:</strong>
+                    <span id="mediumRiskText">0</span>
+                </p>
+
+                <p style="margin-top: 15px;">
+                    <strong>Low Risk:</strong>
+                    <span id="lowRiskText">0</span>
+                </p>
+
+            </div>
+
+        </section>
+<section class="scanner-card" style="margin-top: 25px;">
+
+    <h2>📊 Risk Distribution</h2>
+
+    <div style="margin-top: 25px;">
+
+        <p>
+            <strong>🔴 High Risk</strong>
+            <span id="highRiskPercent">0%</span>
+        </p>
+
+        <div style="background:#e5e7eb; height:10px; border-radius:10px;">
+            <div id="highRiskBar"
+                 style="height:10px; width:0%; background:#ef4444; border-radius:10px;">
+            </div>
+        </div>
+
+        <p style="margin-top:20px;">
+            <strong>🟡 Medium Risk</strong>
+            <span id="mediumRiskPercent">0%</span>
+        </p>
+
+        <div style="background:#e5e7eb; height:10px; border-radius:10px;">
+            <div id="mediumRiskBar"
+                 style="height:10px; width:0%; background:#f59e0b; border-radius:10px;">
+            </div>
+        </div>
+
+        <p style="margin-top:20px;">
+            <strong>🟢 Low Risk</strong>
+            <span id="lowRiskPercent">0%</span>
+        </p>
+
+        <div style="background:#e5e7eb; height:10px; border-radius:10px;">
+            <div id="lowRiskBar"
+                 style="height:10px; width:0%; background:#22c55e; border-radius:10px;">
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+        <section class="scanner-card">
+
+            <h2>📈 Scan Summary</h2>
+
+            <p style="margin-top: 15px;">
+                ScamShield analyzes messages for suspicious patterns
+                such as urgent requests, banking information,
+                suspicious links and threatening language.
+            </p>
+
+            <div id="summary"
+                 style="margin-top: 20px;
+                        padding: 20px;
+                        background: #eff6ff;
+                        border-radius: 10px;">
+            </div>
+
+        </section>
+
+
+        <footer>
+
+            <p>
+                ScamShield © 2026 | Smart Scam Message Detector
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <script>
+
+        function loadAnalytics() {
+
+            const history =
+                JSON.parse(localStorage.getItem("scanHistory")) || [];
+
+            let high = 0;
+            let medium = 0;
+            let low = 0;
+
+            history.forEach(function(scan) {
+
+                if (scan.score >= 60) {
+                    high++;
+                }
+                else if (scan.score >= 30) {
+                    medium++;
+                }
+                else {
+                    low++;
+                }
+
+            });
+
+
+            document.getElementById("totalScans")
+                .innerText = history.length;
+
+            document.getElementById("scamsDetected")
+                .innerText = high + medium;
+
+            document.getElementById("safeMessages")
+                .innerText = low;
+
+            document.getElementById("highRisk")
+                .innerText = high;
+
+            document.getElementById("highRiskText")
+                .innerText = high;
+
+            document.getElementById("mediumRiskText")
+                .innerText = medium;
+
+            document.getElementById("lowRiskText")
+                .innerText = low;
+const total = history.length;
+
+const highPercent = total === 0 ? 0 : Math.round((high / total) * 100);
+const mediumPercent = total === 0 ? 0 : Math.round((medium / total) * 100);
+const lowPercent = total === 0 ? 0 : Math.round((low / total) * 100);
+
+document.getElementById("highRiskPercent").innerText = highPercent + "%";
+document.getElementById("mediumRiskPercent").innerText = mediumPercent + "%";
+document.getElementById("lowRiskPercent").innerText = lowPercent + "%";
+
+document.getElementById("highRiskBar").style.width = highPercent + "%";
+document.getElementById("mediumRiskBar").style.width = mediumPercent + "%";
+document.getElementById("lowRiskBar").style.width = lowPercent + "%";
+
+            document.getElementById("summary")
+                .innerText =
+                "Total scans: " + history.length +
+                " | Scams detected: " + (high + medium) +
+                " | High risk: " + high +
+                " | Medium risk: " + medium +
+                " | Safe: " + low;
+        }
+
+
+        loadAnalytics();
+
+    </script>
+
+</body>
+</html>
+```

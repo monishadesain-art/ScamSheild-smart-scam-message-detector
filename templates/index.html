@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ScamShield</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            🛡️ ScamShield
+        </div>
+
+        <p>Smart Scam Message Detector</p>
+    </header>
+
+
+    <main>
+
+        <section class="hero">
+
+            <h1>Detect Scam Messages Instantly</h1>
+
+            <p>
+                Analyze suspicious messages and identify possible
+                scam indicators.
+            </p>
+
+        </section>
+
+
+        <section class="detector">
+
+            <h2>Analyze Your Message</h2>
+
+            <textarea
+                id="message"
+                placeholder="Paste your suspicious message here..."
+            ></textarea>
+
+            <button onclick="detectScam()">
+                🔍 Detect Scam
+            </button>
+
+        </section>
+
+
+        <section id="result" class="result hidden">
+
+            <h2>Detection Result</h2>
+
+            <div class="score-box">
+
+                <div id="score">
+                    0
+                </div>
+
+                <p>Scam Score</p>
+
+            </div>
+
+
+            <div id="risk" class="risk">
+                LOW RISK
+            </div>
+
+
+            <h3>⚠️ Warning Signs</h3>
+
+            <ul id="warnings"></ul>
+
+
+            <div class="recommendation">
+
+                <h3>Recommendation</h3>
+
+                <p id="recommendation"></p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            ScamShield © 2026 | Smart Scam Detection System
+        </p>
+
+    </footer>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
